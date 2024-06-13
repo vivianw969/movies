@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/moviesdb
+    username: root
+    password: Luckystar521
+
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: "" # 如果没有密码，可以留空
+
+mybatis-plus:
+    mapper-locations: classpath:/mapper/**/*.xml
+    type-aliases-package: org.example.practice.entity
+
+
+mail:
+  username: yujiajia969@163.com
+  password: 刚刚我们获取的stmp的密码
+  host: smtp.163.com
+  default-encoding: UTF-8
