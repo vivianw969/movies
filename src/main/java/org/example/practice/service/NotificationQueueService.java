@@ -16,9 +16,16 @@ public class NotificationQueueService {
     private static final String QUEUE_NAME = "notificationQueue";
 
     public void enqueueNotificationTask(Movie movie, String action) {
+        if (movie == null || action == null || action.isEmpty()) {
+            throw new IllegalArgumentException("Movie and action must not be null or empty");
+        }
         Map<String, Object> task = new HashMap<>();
         task.put("action", action);
         task.put("movie", movie);
         redisTemplate.opsForList().leftPush(QUEUE_NAME, task);
+
     }
-}
+
+
+            }
+

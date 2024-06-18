@@ -21,7 +21,24 @@ mybatis-plus:
 
 
 mail:
-  username: yujiajia969@163.com
-  password: 刚刚我们获取的stmp的密码
   host: smtp.163.com
+  port: 25
+  username: yujiajia969@163.com
+  password: YNJLEBGSVHLCOTOB
+  fromAddress: yujiajia969@163.com
+  protocol: smtp
   default-encoding: UTF-8
+  properties:
+    mail:
+      smtp:
+        auth: true
+        socketFactory:
+          class: javax.net.ssl.SSLSocketFactory
+        starttls:
+          enable: true
+
+
+logging:
+  level:
+    org.springframework.mail: DEBUG
+    org.springframework.web: DEBUG
