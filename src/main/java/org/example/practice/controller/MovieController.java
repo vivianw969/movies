@@ -4,6 +4,7 @@ import org.example.practice.entity.Movie;
 import org.example.practice.service.MovieCacheService;
 import org.example.practice.service.MovieService;
 import org.example.practice.service.NotificationQueueService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,12 +46,18 @@ public class MovieController {
     //    return movieService.insertMovie(movie);
     //}
     public ResponseEntity<String> addMovie(@RequestBody Movie movie) {
-        movieService.insertMovie(movie);
-        return ResponseEntity.ok("Movie added successfully");
+        int insertResult = movieService.insertMovie(movie);
+        if (insertResult > 0) {
+            notificationQueueService.enqueueNotificationTask(movie, "ADD");
+            return ResponseEntity.ok("Movie added successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add movie");
+        }
     }
-
+    @Autowired
+    private NotificationQueueService notificationQueueService;
     @PutMapping("/update")
-    public ResponseEntity<?> updateMovie(@RequestBody Movie movie, NotificationQueueService notificationQueueService) {
+    public ResponseEntity<?> updateMovie(@RequestBody Movie movie) {
         movieCacheService.evictMovieCache(String.valueOf(movie.getId()));
         boolean updateResult = movieService.updateMovie(movie);
         if (updateResult) {
