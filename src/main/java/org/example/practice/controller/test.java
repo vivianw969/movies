@@ -11,6 +11,6 @@ public class test {
     @ResponseBody
     public String testJenkins(){
         System.out.println("Testing Jenkins");
-        return "Jenkins tested.";
+        return "Jenkins testing.";
     }
 }
