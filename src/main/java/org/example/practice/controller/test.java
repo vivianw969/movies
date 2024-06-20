@@ -10,7 +10,7 @@ public class test {
     @RequestMapping("/test")
     @ResponseBody
     public String testJenkins(){
-        System.out.println("Testing Jenkins");
-        return "Jenkins testing.";
+        System.out.println("Testing Jenkins...");
+        return "Jenkins tested";
     }
 }
