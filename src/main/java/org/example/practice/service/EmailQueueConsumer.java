@@ -20,11 +20,12 @@ public class EmailQueueConsumer {
     private NotificationService notificationService;
 
     private final ObjectMapper objectMapper = new ObjectMapper()
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);  // 忽略未知字段;
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);  // ignore unrelated fields
 
-    @Scheduled(fixedRate = 10000) // 每隔10秒执行一次
+    @Scheduled(fixedRate = 10000) // Runs every 10 seconds
     public void consumeEmailQueue() {
         System.out.println("Scheduled task running...");
+        // Pops a task from the right end of the Redis list named "notificationQueue"
         String taskJson = stringRedisTemplate.opsForList().rightPop("notificationQueue");
         if (taskJson != null) {
             try {
